@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[EDIT: Product Name] — MIYOSHI BOUND</title>
+  <meta name="description" content="[EDIT: Product description for SEO — Miyoshi, Tokushima, Japan.]">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="item-page">
+
+  <!-- Navigation -->
+  <nav class="nav nav--light">
+    <a href="../index.html" class="nav__logo">local drip</a>
+    <ul class="nav__links">
+      <li><a href="../index-catalog.html">Catalog</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── Eye-catch ──────────────────────────────────────── -->
+  <section class="item-eyecatch">
+    <p class="item-eyecatch__catch">
+      [EDIT: English catch copy.<br>One line, poetic.]
+    </p>
+
+    <!--
+      メイン写真: ../images/[shop-id]-main.jpg に差し替えてください
+      例: <img class="item-eyecatch__image" src="../images/oboke-honey-main.jpg" alt="大歩危ハニー">
+    -->
+    <div class="item-eyecatch__image" style="background:#E0DED8; min-height:300px;"></div>
+
+    <p class="item-eyecatch__subcatch">[EDIT: Category — Pantry / Sweets / Craft]</p>
+    <h1 class="item-eyecatch__name">[EDIT: 商品名（日本語）]</h1>
+    <p class="item-eyecatch__producer">[EDIT: 生産者名 / 店舗名]</p>
+  </section>
+
+  <!-- ── Story ─────────────────────────────────────────── -->
+  <article class="story container--n">
+
+    <div class="story__block">
+      <p class="story__text">
+        [EDIT: 商品の背景・ストーリーを英語で記述。<br>
+        2〜3段落程度。Nikon Zfで撮影した写真の光の質感を<br>
+        文章でも表現するように。]
+      </p>
+    </div>
+
+    <!--
+      サブ写真1: ../images/[shop-id]-sub1.jpg に差し替えてください
+    -->
+    <div class="story__image" style="background:#E0DED8;"></div>
+
+    <div class="story__block">
+      <p class="story__text">
+        [EDIT: 製法・素材・こだわりについて英語で記述。<br>
+        具体的な数字や地名を入れると信頼感が増す。]
+      </p>
+    </div>
+
+    <!--
+      サブ写真2: ../images/[shop-id]-sub2.jpg に差し替えてください
+    -->
+    <div class="story__image" style="background:#E0DED8;"></div>
+
+  </article>
+
+  <!-- ── Producer ───────────────────────────────────────── -->
+  <section class="producer">
+    <p class="producer__label">The Producer</p>
+
+    <!--
+      生産者の顔写真: ../images/[shop-id]-portrait.jpg に差し替えてください
+    -->
+    <div class="producer__portrait" style="background:#E0DED8;"></div>
+
+    <p class="producer__name">[EDIT: 生産者氏名]</p>
+    <p class="producer__title">[EDIT: 肩書き / 屋号 / 所在地]</p>
+    <p class="producer__bio">
+      [EDIT: 生産者のプロフィールを英語で2〜3文。
+      三好市のどこで、何年から、どんな思いで作っているか。]
+    </p>
+    <p class="producer__message">
+      "[EDIT: 生産者からのメッセージを英語で1〜2文。
+      訪れた観光客への言葉として。]"
+    </p>
+  </section>
+
+  <!-- ── I'm Interested ─────────────────────────────────── -->
+  <section class="interest-section">
+    <p class="interest-section__label">Did this catch your eye?</p>
+    <button class="btn-interest" id="btnInterest" aria-label="I'm Interested">
+      I'm Interested
+    </button>
+  </section>
+
+  <!-- ── Back Link ──────────────────────────────────────── -->
+  <a href="../index-catalog.html" class="back-link">← Back to Catalog</a>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p class="footer__logo">local drip</p>
+    <p class="footer__copy">© 2024 MIYOSHI BOUND. Tokushima, Japan.</p>
+  </footer>
+
+  <!-- ── Tracking ───────────────────────────────────────── -->
+  <script src="../js/tracking.js"></script>
+  <script>
+    /**
+     * PRODUCER CONFIG
+     * ─────────────────────────────────────────────────────
+     * このファイルを複製して各事業者ページを作成する際は
+     * 以下の SHOP_ID を変更してください。
+     * 例: 'oboke-honey', 'iya-washi', 'tenku-yamacya'
+     *
+     * SHOP_ID が未設定の場合は URLパラメータ ?shop= または
+     * ファイル名から自動取得します。
+     * ─────────────────────────────────────────────────────
+     */
+    var SHOP_ID = '[EDIT_SHOP_ID]';
+
+    // フォールバック: URLパラメータ → ファイル名
+    (function() {
+      var params = new URLSearchParams(window.location.search);
+      var fromParam = params.get('shop');
+      if (fromParam) { SHOP_ID = fromParam; return; }
+      if (SHOP_ID === '[EDIT_SHOP_ID]' || !SHOP_ID) {
+        var filename = window.location.pathname.split('/').pop().replace('.html', '');
+        SHOP_ID = filename || 'unknown';
+      }
+    })();
+
+    // ページ閲覧ログ
+    MiyoshiTrack.send({ shop: SHOP_ID, type: 'view' });
+
+    // I'm Interested ボタン
+    var btn = document.getElementById('btnInterest');
+    if (btn) {
+      btn.addEventListener('click', function() {
+        if (btn.classList.contains('is-liked')) return;
+        btn.classList.add('is-liked');
+        btn.textContent = 'Thank you ♡';
+        MiyoshiTrack.send({ shop: SHOP_ID, type: 'like' });
+      });
+    }
+  </script>
+</body>
+</html>

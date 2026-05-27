@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>B-side Story — MIYOSHI BOUND</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Noto Serif JP"', 'Georgia', 'serif'],
+            sans:  ['"Noto Sans JP"', 'Helvetica', 'sans-serif'],
+          },
+          colors: {
+            ink:    '#1a1a1a',
+            muted:  '#888888',
+            border: '#e0ddd8',
+            bg:     '#fafaf8',
+            accent: '#c8a96e',
+          },
+          letterSpacing: {
+            widest2: '0.22em',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* ── Base ── */
+    body { background: #fafaf8; color: #1a1a1a; }
+
+    /* ── Progress bar ── */
+    #progress-bar {
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ── Step panels ── */
+    .step-panel {
+      display: none;
+      animation: fadeSlide 0.45s ease forwards;
+    }
+    .step-panel.active { display: block; }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Radio / Checkbox hidden ── */
+    input[type="radio"],
+    input[type="checkbox"] { display: none; }
+
+    /* ── Pill tag ── */
+    .pill-label {
+      display: inline-flex; align-items: center;
+      padding: 0.45rem 1.1rem;
+      border: 1px solid #c8c5bf;
+      border-radius: 9999px;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      color: #555;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      user-select: none;
+    }
+    .pill-label:hover {
+      border-color: #1a1a1a;
+      color: #1a1a1a;
+    }
+    input[type="radio"]:checked  + .pill-label,
+    input[type="checkbox"]:checked + .pill-label {
+      background: #1a1a1a;
+      border-color: #1a1a1a;
+      color: #fafaf8;
+    }
+
+    /* ── Direction card (STEP 2) ── */
+    .direction-label {
+      display: block;
+      padding: 1.6rem 1.8rem;
+      border: 1px solid #e0ddd8;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .direction-label:hover { border-color: #1a1a1a; }
+    input[type="radio"]:checked + .direction-label {
+      border-color: #1a1a1a;
+      background: #f5f3ef;
+    }
+    input[type="radio"]:checked + .direction-label .dir-letter {
+      color: #1a1a1a;
+    }
+
+    /* ── Text input ── */
+    .form-input {
+      width: 100%;
+      border: none;
+      border-bottom: 1px solid #c8c5bf;
+      background: transparent;
+      padding: 0.6rem 0;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1rem;
+      color: #1a1a1a;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-input:focus { border-bottom-color: #1a1a1a; }
+    .form-input::placeholder { color: #bbb; font-size: 0.88rem; }
+
+    textarea.form-input {
+      resize: none;
+      border: 1px solid #c8c5bf;
+      padding: 0.9rem 1rem;
+      line-height: 1.9;
+      min-height: 120px;
+    }
+    textarea.form-input:focus { border-color: #1a1a1a; }
+
+    /* ── Nav buttons ── */
+    .btn-next {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.85rem 2.4rem;
+      background: #1a1a1a; color: #fafaf8;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 0.78rem; letter-spacing: 0.18em;
+      border: none; cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .btn-next:hover { opacity: 0.72; }
+    .btn-back {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 0.72rem; letter-spacing: 0.14em;
+      color: #999; background: none; border: none;
+      cursor: pointer; padding: 0;
+      transition: color 0.2s;
+    }
+    .btn-back:hover { color: #1a1a1a; }
+
+    /* ── Submit button ── */
+    .btn-submit {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 1rem 3rem;
+      background: #1a1a1a; color: #fafaf8;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.92rem; letter-spacing: 0.12em;
+      border: none; cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .btn-submit:hover { opacity: 0.72; }
+
+    /* ── Step label ── */
+    .step-eyebrow {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 0.62rem; letter-spacing: 0.32em;
+      text-transform: uppercase; color: #aaa;
+    }
+
+    /* ── Q label ── */
+    .q-label {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1.05rem; font-weight: 400;
+      line-height: 1.75; letter-spacing: 0.04em;
+      color: #1a1a1a;
+    }
+    .q-sub {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 0.72rem; color: #aaa; letter-spacing: 0.06em;
+    }
+
+    /* ── Divider line ── */
+    .step-divider {
+      width: 2rem; height: 1px; background: #c8c5bf; margin: 0;
+    }
+
+    /* ── Completion screen ── */
+    #complete-screen { display: none; }
+    #complete-screen.active { display: block; animation: fadeSlide 0.5s ease forwards; }
+  </style>
+</head>
+<body class="min-h-screen font-sans">
+
+  <!-- ── Header ── -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-bg/90 backdrop-blur-sm border-b border-border">
+    <div class="max-w-2xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="index.html" class="font-sans text-xs tracking-widest2 text-muted hover:text-ink transition-colors">
+        ← MIYOSHI BOUND
+      </a>
+      <span class="font-serif text-xs tracking-widest text-muted">B-side Story</span>
+    </div>
+  </header>
+
+  <!-- ── Main ── -->
+  <main class="max-w-2xl mx-auto px-6 pt-28 pb-32">
+
+    <!-- Title block -->
+    <div class="mb-14">
+      <p class="font-sans text-xs tracking-widest2 text-muted mb-4">Producer Hearing Form</p>
+      <h1 class="font-serif text-3xl font-light leading-snug tracking-wide text-ink mb-5">
+        B-side Story<br>
+        <span class="text-lg text-muted font-light">あなたの商品の、裏側を教えてください。</span>
+      </h1>
+      <div class="step-divider mb-5"></div>
+      <p class="font-sans text-sm leading-relaxed text-muted" style="letter-spacing:0.04em;">
+        このフォームは、三好の生産者の方々から商品の背景にある<br class="hidden sm:inline">
+        ストーリーを引き出すためのヒアリングシートです。<br>
+        正解はありません。あなたの言葉で、自由にお答えください。
+      </p>
+    </div>
+
+    <!-- Progress -->
+    <div class="mb-10">
+      <div class="flex justify-between items-center mb-2">
+        <span id="progress-label" class="font-sans text-xs text-muted tracking-widest">STEP 1 / 5</span>
+        <span id="progress-pct" class="font-sans text-xs text-muted">20%</span>
+      </div>
+      <div class="w-full h-px bg-border">
+        <div id="progress-bar" class="h-px bg-ink" style="width:20%;"></div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+         STEP 1 : 基本情報
+    ════════════════════════════════════════ -->
+    <div id="step-1" class="step-panel active">
+      <p class="step-eyebrow mb-6">Step 01 — 基本情報</p>
+
+      <!-- Q1 -->
+      <div class="mb-10">
+        <p class="q-label mb-1">商品名（日本語）</p>
+        <p class="q-sub mb-4">例：大歩危ハニー、天空ノ山茶</p>
+        <input type="text" id="q1" class="form-input" placeholder="商品名を入力してください" />
+      </div>
+
+      <!-- Q2 -->
+      <div class="mb-10">
+        <p class="q-label mb-1">販売価格帯（税込）</p>
+        <p class="q-sub mb-4">例：1,200円〜、500円〜1,500円</p>
+        <input type="text" id="q2" class="form-input" placeholder="価格帯を入力してください" />
+      </div>
+
+      <!-- Q3 -->
+      <div class="mb-12">
+        <p class="q-label mb-5">カテゴリー</p>
+        <div class="flex flex-wrap gap-3">
+          <label>
+            <input type="radio" name="q3" value="Pantry" />
+            <span class="pill-label">Pantry — 食品・調味料</span>
+          </label>
+          <label>
+            <input type="radio" name="q3" value="Sweets" />
+            <span class="pill-label">Sweets — 菓子・土産</span>
+          </label>
+          <label>
+            <input type="radio" name="q3" value="Craft" />
+            <span class="pill-label">Craft — 工芸・雑貨</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="flex justify-end">
+        <button class="btn-next" onclick="goNext(1)">次へ →</button>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+         STEP 2 : 方向性の確定
+    ════════════════════════════════════════ -->
+    <div id="step-2" class="step-panel">
+      <p class="step-eyebrow mb-6">Step 02 — 方向性の確定</p>
+
+      <div class="mb-3">
+        <p class="q-label mb-2">この商品の「一番の自慢」をあえて一つ選ぶなら、どれに一番近いですか？</p>
+        <p class="q-sub mb-8">あなたの商品の核心を決める質問です。直感で選んでください。</p>
+      </div>
+
+      <div class="flex flex-col gap-4 mb-12">
+        <label>
+          <input type="radio" name="q4" value="A" onchange="setDirection('A')" />
+          <span class="direction-label">
+            <span class="dir-letter font-sans text-xs tracking-widest text-muted block mb-2">A</span>
+            <span class="font-serif text-base leading-relaxed text-ink">
+              三好の厳しい自然環境や、昔から受け継がれてきた<br>「歴史や風土」
+            </span>
+          </span>
+        </label>
+        <label>
+          <input type="radio" name="q4" value="B" onchange="setDirection('B')" />
+          <span class="direction-label">
+            <span class="dir-letter font-sans text-xs tracking-widest text-muted block mb-2">B</span>
+            <span class="font-serif text-base leading-relaxed text-ink">
+              効率を完全に無視した、圧倒的な<br>「手作業や独自の製法」
+            </span>
+          </span>
+        </label>
+        <label>
+          <input type="radio" name="q4" value="C" onchange="setDirection('C')" />
+          <span class="direction-label">
+            <span class="dir-letter font-sans text-xs tracking-widest text-muted block mb-2">C</span>
+            <span class="font-serif text-base leading-relaxed text-ink">
+              三好の豊かな暮らしや、ゆったりした<br>「日常の心地よさ」
+            </span>
+          </span>
+        </label>
+      </div>
+
+      <div class="flex justify-between items-center">
+        <button class="btn-back" onclick="goPrev(2)">← 戻る</button>
+        <button class="btn-next" onclick="goNext(2)">次へ →</button>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+         STEP 3 : レイヤー情報
+    ════════════════════════════════════════ -->
+    <div id="step-3" class="step-panel">
+      <p class="step-eyebrow mb-6">Step 03 — レイヤー情報</p>
+
+      <!-- Q5 -->
+      <div class="mb-10">
+        <p class="q-label mb-1">製法・品質の特徴</p>
+        <p class="q-sub mb-5">当てはまるものをすべてタップしてください</p>
+        <div class="flex flex-wrap gap-2">
+          <label><input type="checkbox" name="q5" value="100%手作業" /><span class="pill-label">100%手作業</span></label>
+          <label><input type="checkbox" name="q5" value="完全無添加" /><span class="pill-label">完全無添加</span></label>
+          <label><input type="checkbox" name="q5" value="少量限定生産" /><span class="pill-label">少量限定生産</span></label>
+          <label><input type="checkbox" name="q5" value="長期熟成" /><span class="pill-label">長期熟成</span></label>
+          <label><input type="checkbox" name="q5" value="引き算の製法" /><span class="pill-label">引き算の製法</span></label>
+          <label><input type="checkbox" name="q5" value="秘伝のレシピ" /><span class="pill-label">秘伝のレシピ</span></label>
+          <label><input type="checkbox" name="q5" value="規格外の素材使用" /><span class="pill-label">規格外の素材使用</span></label>
+          <label><input type="checkbox" name="q5" value="地産地消" /><span class="pill-label">地産地消</span></label>
+        </div>
+      </div>
+
+      <!-- Q6 -->
+      <div class="mb-10">
+        <p class="q-label mb-1">環境・風景</p>
+        <p class="q-sub mb-5">作っている場所の景色に近いものをすべてタップしてください</p>
+        <div class="flex flex-wrap gap-2">
+          <label><input type="checkbox" name="q6" value="深い朝霧" /><span class="pill-label">深い朝霧</span></label>
+          <label><input type="checkbox" name="q6" value="澄んだ川・湧き水" /><span class="pill-label">澄んだ川・湧き水</span></label>
+          <label><input type="checkbox" name="q6" value="急峻な山の斜面" /><span class="pill-label">急峻な山の斜面</span></label>
+          <label><input type="checkbox" name="q6" value="苔むす森" /><span class="pill-label">苔むす森</span></label>
+          <label><input type="checkbox" name="q6" value="虫の音と静寂" /><span class="pill-label">虫の音と静寂</span></label>
+          <label><input type="checkbox" name="q6" value="厳しい寒暖差" /><span class="pill-label">厳しい寒暖差</span></label>
+          <label><input type="checkbox" name="q6" value="整理された清潔な工房" /><span class="pill-label">整理された清潔な工房</span></label>
+        </div>
+      </div>
+
+      <!-- Q7 -->
+      <div class="mb-10">
+        <p class="q-label mb-5">歴史の長さ</p>
+        <div class="flex flex-wrap gap-2">
+          <label><input type="radio" name="q7" value="10年未満（新しい挑戦）" /><span class="pill-label">10年未満（新しい挑戦）</span></label>
+          <label><input type="radio" name="q7" value="30年〜（昭和から）" /><span class="pill-label">30年〜（昭和から）</span></label>
+          <label><input type="radio" name="q7" value="50年〜（先代から）" /><span class="pill-label">50年〜（先代から）</span></label>
+          <label><input type="radio" name="q7" value="100年以上（伝統）" /><span class="pill-label">100年以上（伝統）</span></label>
+        </div>
+      </div>
+
+      <!-- Q8 -->
+      <div class="mb-12">
+        <p class="q-label mb-1">インバウンドに届けたい「感情」</p>
+        <p class="q-sub mb-5">すべてタップしてください</p>
+        <div class="flex flex-wrap gap-2">
+          <label><input type="checkbox" name="q8" value="ほっとする安心感" /><span class="pill-label">ほっとする安心感</span></label>
+          <label><input type="checkbox" name="q8" value="圧倒される職人技" /><span class="pill-label">圧倒される職人技</span></label>
+          <label><input type="checkbox" name="q8" value="懐かしい田舎の記憶" /><span class="pill-label">懐かしい田舎の記憶</span></label>
+          <label><input type="checkbox" name="q8" value="洗練された日本の美" /><span class="pill-label">洗練された日本の美</span></label>
+          <label><input type="checkbox" name="q8" value="自然への畏敬の念" /><span class="pill-label">自然への畏敬の念</span></label>
+        </div>
+      </div>
+
+      <div class="flex justify-between items-center">
+        <button class="btn-back" onclick="goPrev(3)">← 戻る</button>
+        <button class="btn-next" onclick="goNext(3)">次へ →</button>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+         STEP 4 : 核心の深掘り（条件分岐）
+    ════════════════════════════════════════ -->
+    <div id="step-4" class="step-panel">
+      <p class="step-eyebrow mb-6">Step 04 — 核心の深掘り</p>
+
+      <!-- Route A -->
+      <div id="route-A" class="hidden">
+        <p class="q-label mb-2">
+          あなたがこの商品を作っていて、<br>一番「美しい」と感じる風景や瞬間を、<br>自分の言葉で教えてください。
+        </p>
+        <p class="q-sub mb-6">歴史・自然・風土ルートの深掘り質問です</p>
+        <textarea id="q4a" class="form-input" placeholder="例：霧が晴れた朝、山の斜面に光が差し込む瞬間に茶葉を摘む。その静けさが、この茶の味になっていると思う。" maxlength="200"></textarea>
+        <p class="text-right font-sans text-xs text-muted mt-2" id="count-A">0 / 200</p>
+      </div>
+
+      <!-- Route B -->
+      <div id="route-B" class="hidden">
+        <p class="q-label mb-2">
+          ぶっちゃけ、一番手がかかっている工程はどこですか？<br>「具体的な数字」を必ず入れて教えてください。
+        </p>
+        <p class="q-sub mb-6">例：〇日かかる、〇回混ぜる、〇年熟成</p>
+        <textarea id="q4b" class="form-input" placeholder="例：仕込みから出荷まで最低3年。その間、毎朝1時間かけて手で混ぜ続ける。機械では出せない粘度がある。" maxlength="200"></textarea>
+        <p class="text-right font-sans text-xs text-muted mt-2" id="count-B">0 / 200</p>
+      </div>
+
+      <!-- Route C -->
+      <div id="route-C" class="hidden">
+        <p class="q-label mb-2">
+          この商品を開けた外国人の旅人に、<br>どんな「空気感や時間」を感じてほしいですか？
+        </p>
+        <p class="q-sub mb-6">日常・暮らし・心地よさルートの深掘り質問です</p>
+        <textarea id="q4c" class="form-input" placeholder="例：縁側でお茶を飲みながら、何も考えずにぼーっとしている。そういう「何もしない豊かさ」を感じてほしい。" maxlength="200"></textarea>
+        <p class="text-right font-sans text-xs text-muted mt-2" id="count-C">0 / 200</p>
+      </div>
+
+      <!-- Fallback (no direction selected) -->
+      <div id="route-none">
+        <p class="font-sans text-sm text-muted">STEP 2 に戻って方向性を選んでください。</p>
+      </div>
+
+      <div class="flex justify-between items-center mt-10">
+        <button class="btn-back" onclick="goPrev(4)">← 戻る</button>
+        <button class="btn-next" onclick="goNext(4)">次へ →</button>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+         STEP 5 : ビジュアルと最終確認
+    ════════════════════════════════════════ -->
+    <div id="step-5" class="step-panel">
+      <p class="step-eyebrow mb-6">Step 05 — ビジュアルと最終確認</p>
+
+      <!-- Q9 -->
+      <div class="mb-10">
+        <p class="q-label mb-1">旅人へ一言メッセージをどうぞ！</p>
+        <p class="q-sub mb-4">英語ページのキャッチコピーのヒントになります</p>
+        <input type="text" id="q9" class="form-input" placeholder="例：この蜂蜜は、三好の山が一年かけて作った贈り物です。" />
+      </div>
+
+      <!-- Q10 -->
+      <div class="mb-14">
+        <p class="q-label mb-5">写真（商品・背景・生産者）について</p>
+        <div class="flex flex-col gap-3 sm:flex-row sm:gap-4">
+          <label>
+            <input type="radio" name="q10" value="撮影しにきてほしい" />
+            <span class="pill-label text-sm py-3 px-5">撮影しにきてほしい</span>
+          </label>
+          <label>
+            <input type="radio" name="q10" value="自分のお気に入り写真を後で送る" />
+            <span class="pill-label text-sm py-3 px-5">自分のお気に入り写真を後で送る</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Summary preview -->
+      <div class="border border-border p-6 mb-10 bg-white/60">
+        <p class="font-sans text-xs tracking-widest text-muted mb-4">REVIEW — 入力内容の確認</p>
+        <div id="summary" class="font-sans text-sm leading-loose text-ink space-y-1"></div>
+      </div>
+
+      <div class="flex justify-between items-center">
+        <button class="btn-back" onclick="goPrev(5)">← 戻る</button>
+        <button class="btn-submit" onclick="submitForm()">
+          B-side Story を送信する →
+        </button>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+         COMPLETE SCREEN
+    ════════════════════════════════════════ -->
+    <div id="complete-screen">
+      <div class="text-center py-20">
+        <div class="step-divider mx-auto mb-8"></div>
+        <p class="font-sans text-xs tracking-widest2 text-muted mb-6">Thank you</p>
+        <h2 class="font-serif text-2xl font-light leading-relaxed text-ink mb-6">
+          ありがとうございました。<br>
+          あなたのストーリーを受け取りました。
+        </h2>
+        <p class="font-sans text-sm text-muted leading-relaxed mb-12">
+          3営業日以内に、担当者よりご連絡いたします。<br>
+          英語ページの制作に向けて、一緒に進めていきましょう。
+        </p>
+        <div class="step-divider mx-auto mb-10"></div>
+        <a href="index.html" class="font-sans text-xs tracking-widest text-muted hover:text-ink transition-colors">
+          ← MIYOSHI BOUND トップへ
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ── Footer ── -->
+  <footer class="border-t border-border py-6 text-center">
+    <p class="font-sans text-xs tracking-widest text-muted">MIYOSHI BOUND — local drip</p>
+  </footer>
+
+  <script>
+    /* ── State ── */
+    let currentStep = 1;
+    let direction   = null; // 'A' | 'B' | 'C'
+    const TOTAL     = 5;
+
+    /* ── Direction setter ── */
+    function setDirection(d) {
+      direction = d;
+    }
+
+    /* ── Progress update ── */
+    function updateProgress(step) {
+      const pct = Math.round((step / TOTAL) * 100);
+      document.getElementById('progress-bar').style.width  = pct + '%';
+      document.getElementById('progress-label').textContent = `STEP ${step} / ${TOTAL}`;
+      document.getElementById('progress-pct').textContent   = pct + '%';
+    }
+
+    /* ── Show step ── */
+    function showStep(n) {
+      document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+      const panel = document.getElementById('step-' + n);
+      if (panel) panel.classList.add('active');
+      updateProgress(n);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      currentStep = n;
+
+      // STEP 4: show correct route
+      if (n === 4) renderStep4();
+      // STEP 5: render summary
+      if (n === 5) renderSummary();
+    }
+
+    /* ── Navigate ── */
+    function goNext(from) {
+      if (from === 1 && !validateStep1()) return;
+      if (from === 2 && !validateStep2()) return;
+      showStep(from + 1);
+    }
+    function goPrev(from) {
+      showStep(from - 1);
+    }
+
+    /* ── Validation ── */
+    function validateStep1() {
+      if (!document.getElementById('q1').value.trim()) {
+        alert('商品名を入力してください。');
+        return false;
+      }
+      return true;
+    }
+    function validateStep2() {
+      if (!direction) {
+        alert('方向性を一つ選んでください。');
+        return false;
+      }
+      return true;
+    }
+
+    /* ── STEP 4 conditional render ── */
+    function renderStep4() {
+      ['A','B','C','none'].forEach(r => {
+        document.getElementById('route-' + r).classList.add('hidden');
+      });
+      if (direction) {
+        document.getElementById('route-' + direction).classList.remove('hidden');
+      } else {
+        document.getElementById('route-none').classList.remove('hidden');
+      }
+    }
+
+    /* ── Character counter for STEP 4 ── */
+    ['A','B','C'].forEach(r => {
+      const ta = document.getElementById('q4' + r.toLowerCase());
+      const ct = document.getElementById('count-' + r);
+      if (ta && ct) {
+        ta.addEventListener('input', () => {
+          ct.textContent = ta.value.length + ' / 200';
+        });
+      }
+    });
+
+    /* ── STEP 5 summary ── */
+    function renderSummary() {
+      const q5vals = [...document.querySelectorAll('input[name="q5"]:checked')].map(e => e.value);
+      const q6vals = [...document.querySelectorAll('input[name="q6"]:checked')].map(e => e.value);
+      const q7val  = document.querySelector('input[name="q7"]:checked')?.value  || '—';
+      const q8vals = [...document.querySelectorAll('input[name="q8"]:checked')].map(e => e.value);
+      const q4val  = direction
+        ? document.getElementById('q4' + direction.toLowerCase())?.value || '—'
+        : '—';
+
+      const rows = [
+        ['商品名',       document.getElementById('q1').value || '—'],
+        ['価格帯',       document.getElementById('q2').value || '—'],
+        ['カテゴリー',   document.querySelector('input[name="q3"]:checked')?.value || '—'],
+        ['方向性',       direction ? `[${direction}] ${{'A':'歴史・風土','B':'手作業・製法','C':'日常・心地よさ'}[direction]}` : '—'],
+        ['製法の特徴',   q5vals.length ? q5vals.join('、') : '—'],
+        ['環境・風景',   q6vals.length ? q6vals.join('、') : '—'],
+        ['歴史の長さ',   q7val],
+        ['届けたい感情', q8vals.length ? q8vals.join('、') : '—'],
+        ['深掘り回答',   q4val],
+        ['旅人へのメッセージ', document.getElementById('q9').value || '—'],
+        ['写真について', document.querySelector('input[name="q10"]:checked')?.value || '—'],
+      ];
+
+      document.getElementById('summary').innerHTML = rows.map(([k,v]) =>
+        `<div class="flex gap-3"><span class="text-muted w-32 flex-shrink-0">${k}</span><span>${v}</span></div>`
+      ).join('');
+    }
+
+    /* ── Submit ── */
+    function submitForm() {
+      const q5vals = [...document.querySelectorAll('input[name="q5"]:checked')].map(e => e.value);
+      const q6vals = [...document.querySelectorAll('input[name="q6"]:checked')].map(e => e.value);
+      const q8vals = [...document.querySelectorAll('input[name="q8"]:checked')].map(e => e.value);
+
+      const payload = {
+        step1: {
+          productName: document.getElementById('q1').value,
+          priceRange:  document.getElementById('q2').value,
+          category:    document.querySelector('input[name="q3"]:checked')?.value || null,
+        },
+        step2: {
+          direction: direction,
+        },
+        step3: {
+          craftFeatures: q5vals,
+          environment:   q6vals,
+          history:       document.querySelector('input[name="q7"]:checked')?.value || null,
+          emotions:      q8vals,
+        },
+        step4: {
+          route:   direction,
+          answer:  direction ? (document.getElementById('q4' + direction.toLowerCase())?.value || '') : '',
+        },
+        step5: {
+          message: document.getElementById('q9').value,
+          photo:   document.querySelector('input[name="q10"]:checked')?.value || null,
+        },
+        meta: {
+          submittedAt: new Date().toISOString(),
+          formVersion: '1.0',
+        }
+      };
+
+      console.log('=== B-side Story Submission ===');
+      console.log(JSON.stringify(payload, null, 2));
+
+      // Hide all steps, show complete screen
+      document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('progress-bar').style.width = '100%';
+      document.getElementById('progress-label').textContent = 'COMPLETE';
+      document.getElementById('progress-pct').textContent = '100%';
+
+      const cs = document.getElementById('complete-screen');
+      cs.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+
+</body>
+</html>

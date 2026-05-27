@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="MIYOSHI BOUNDは、三好市の良いものを世界へ繋ぐデジタルプラットフォームです。" />
+  <title>About — MIYOSHI BOUND</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #F7F6F2;
+      color: #1C1C1C;
+      font-family: 'Noto Sans JP', Helvetica, Arial, sans-serif;
+      line-height: 1.8;
+      letter-spacing: 0.05em;
+    }
+
+    /* Nav */
+    .a-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.4rem 3rem;
+      background: rgba(247,246,242,0.93);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid #D8D5CF;
+    }
+    .a-nav__logo {
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: #1C1C1C; text-decoration: none;
+    }
+    .a-nav__links { list-style: none; display: flex; gap: 2.5rem; }
+    .a-nav__links a {
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: #1C1C1C; text-decoration: none; opacity: 0.55; transition: opacity 0.2s;
+    }
+    .a-nav__links a:hover, .a-nav__links a[aria-current] { opacity: 1; }
+    @media (max-width: 640px) {
+      .a-nav { padding: 1.1rem 1.5rem; }
+      .a-nav__links { gap: 1.4rem; }
+    }
+
+    /* Utilities */
+    .wrap { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
+    .wrap--wide { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .section { padding: 7rem 0; }
+    .section--accent { background: #EFEDE8; }
+    .section--bordered { border-top: 1px solid #D8D5CF; }
+
+    .eyebrow {
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.32em; text-transform: uppercase;
+      color: #888; margin-bottom: 1.2rem;
+    }
+
+    /* Fade-in */
+    .fi { opacity: 0; transform: translateY(22px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fi.on { opacity: 1; transform: none; }
+
+    /* Photo placeholder */
+    .photo-ph {
+      background: #D8D5CF;
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    .photo-ph span {
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: #aaa;
+    }
+    .photo-ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* 1. HERO */
+    .hero { padding-top: 9rem; padding-bottom: 0; }
+    .hero__head { text-align: center; padding-bottom: 3.5rem; }
+    .hero__title {
+      font-size: clamp(1.9rem, 5vw, 3.2rem);
+      font-weight: 700; line-height: 1.55; letter-spacing: 0.04em;
+      margin: 0.8rem 0 2rem;
+    }
+    .hero__body { max-width: 660px; margin: 3.5rem auto 0; text-align: center; }
+    .hero__body p {
+      font-size: 0.97rem; line-height: 2.1;
+      letter-spacing: 0.06em; color: #444; margin-bottom: 0.9rem;
+    }
+
+    /* 2. INSIGHT */
+    .insight__headline {
+      font-size: clamp(1.2rem, 3vw, 1.75rem);
+      font-weight: 700; line-height: 1.65; letter-spacing: 0.04em;
+      margin-bottom: 4rem;
+    }
+    /* 2カラム：左に写真、右に長文テキスト */
+    .insight__cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    @media (max-width: 720px) { .insight__cols { grid-template-columns: 1fr; } }
+    .insight__col { display: flex; flex-direction: column; gap: 1.4rem; }
+    .insight__img { width: 100%; aspect-ratio: 4 / 5; }
+    .insight__text { font-size: 0.92rem; line-height: 2.1; letter-spacing: 0.05em; color: #444; }
+    .insight__text p { margin-bottom: 1.4rem; }
+    .insight__text p:last-child { margin-bottom: 0; }
+    .insight__text strong { color: #1C1C1C; font-weight: 700; }
+    .insight__lead {
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      font-weight: 700; line-height: 1.6; letter-spacing: 0.04em;
+      color: #1C1C1C; margin-bottom: 0.5rem;
+    }
+    .insight__sub {
+      font-size: clamp(0.95rem, 2vw, 1.15rem);
+      font-weight: 700; line-height: 1.6; letter-spacing: 0.04em;
+      color: #1C1C1C; margin-bottom: 1.2rem;
+    }
+    .insight__caption {
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: #aaa; margin-top: 0.6rem;
+    }
+
+    /* 3. FEA */
+    .fea__head { margin-bottom: 4rem; }
+    .fea__title {
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: clamp(1.7rem, 4vw, 2.8rem);
+      font-weight: 700; letter-spacing: 0.06em; margin-bottom: 0.8rem;
+    }
+    .fea__subtitle { font-size: 1rem; line-height: 1.9; letter-spacing: 0.05em; color: #555; max-width: 520px; }
+    .fea__item {
+      display: grid; grid-template-columns: 2.8rem 1fr;
+      gap: 1.5rem; align-items: start;
+      padding: 2.4rem 0; border-bottom: 1px solid #D8D5CF;
+    }
+    .fea__item:first-of-type { border-top: 1px solid #D8D5CF; }
+    .fea__num {
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.2em; color: #888; padding-top: 0.25rem;
+    }
+    .fea__item-title { font-size: 1rem; font-weight: 700; letter-spacing: 0.06em; margin-bottom: 0.55rem; }
+    .fea__item-body { font-size: 0.9rem; line-height: 2.1; letter-spacing: 0.05em; color: #555; }
+    .fea__item-body strong { color: #1C1C1C; font-weight: 700; }
+
+    /* 4. COMMUNITY */
+    .community__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    @media (max-width: 720px) { .community__inner { grid-template-columns: 1fr; gap: 3rem; } }
+    .community__img { width: 100%; aspect-ratio: 3 / 4; }
+    .community__headline {
+      font-size: clamp(1.3rem, 3vw, 2rem);
+      font-weight: 700; line-height: 1.65; letter-spacing: 0.04em; margin-bottom: 1.6rem;
+    }
+    .community__body { font-size: 0.92rem; line-height: 2.1; letter-spacing: 0.05em; color: #555; margin-bottom: 2rem; }
+    .benefits { list-style: none; display: flex; flex-direction: column; gap: 1.8rem; }
+    .benefits li {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-template-rows: auto auto;
+      column-gap: 0.9rem;
+      font-size: 0.9rem; line-height: 1.9; letter-spacing: 0.04em; color: #444;
+    }
+    .benefits li::before {
+      content: '—'; color: #888; font-family: Helvetica, Arial, sans-serif;
+      grid-row: 1 / 3; align-self: start; padding-top: 0.1em; flex-shrink: 0;
+    }
+    .benefits strong {
+      color: #1C1C1C; font-weight: 700; display: block;
+      grid-column: 2; grid-row: 1;
+    }
+    .benefits span {
+      display: block; grid-column: 2; grid-row: 2;
+      color: #555; font-size: 0.88rem; line-height: 1.9;
+    }
+
+    /* 5. CTA */
+    .cta { text-align: center; }
+    .cta__title {
+      font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+      font-weight: 700; letter-spacing: 0.06em; line-height: 1.7; margin-bottom: 2.5rem;
+    }
+    .cta__btn {
+      display: inline-block; padding: 1.1rem 3rem;
+      background: #1C1C1C; color: #F7F6F2;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 0.88rem; font-weight: 700; letter-spacing: 0.12em;
+      text-decoration: none; transition: opacity 0.2s; margin-bottom: 1.5rem;
+    }
+    .cta__btn:hover { opacity: 0.72; }
+    .cta__note { font-size: 0.78rem; line-height: 1.9; letter-spacing: 0.05em; color: #888; }
+
+    /* Insight center layout */
+    .insight-center {
+      max-width: 680px;
+      margin: 0 auto 3rem;
+      text-align: center;
+    }
+    .insight-center__q {
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      font-weight: 700; letter-spacing: 0.04em; line-height: 1.6;
+      margin-bottom: 1.4rem;
+    }
+    .insight-center__lead {
+      font-size: 0.97rem; line-height: 2.1; letter-spacing: 0.05em; color: #444;
+    }
+    .insight-center__body {
+      font-size: 0.92rem; line-height: 2.1; letter-spacing: 0.05em; color: #555;
+      margin-bottom: 1.2rem;
+    }
+    .insight-quote {
+      max-width: 680px;
+      margin: 2rem auto 3rem;
+      text-align: center;
+      padding: 2.5rem 2rem;
+      border-top: 1px solid #D8D5CF;
+      border-bottom: 1px solid #D8D5CF;
+    }
+    .insight-quote__text {
+      font-size: clamp(1.3rem, 3vw, 2rem);
+      font-weight: 700; line-height: 1.7; letter-spacing: 0.06em;
+      font-style: italic; color: #1C1C1C;
+    }
+
+    /* Footer */
+    .a-footer {
+      border-top: 1px solid #D8D5CF; padding: 2.5rem 3rem;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+    }
+    .a-footer__nav { list-style: none; display: flex; gap: 2rem; }
+    .a-footer__nav a {
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: #888; text-decoration: none; transition: color 0.2s;
+    }
+    .a-footer__nav a:hover { color: #1C1C1C; }
+    .a-footer__copy { font-family: Helvetica, Arial, sans-serif; font-size: 0.62rem; letter-spacing: 0.12em; color: #888; }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="a-nav" aria-label="Site navigation">
+    <a href="index.html" class="a-nav__logo">MIYOSHI BOUND</a>
+    <ul class="a-nav__links" role="list">
+      <li><a href="index-catalog.html">Catalog</a></li>
+      <li><a href="about.html" aria-current="page">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+
+  <!-- 1. HERO -->
+  <section class="hero section">
+    <div class="wrap hero__head fi">
+      <p class="eyebrow">MIYOSHI BOUND 2026</p>
+      <h1 class="hero__title">三好の「良いもの」を、<br>世界へ繋ぐ新しい配線を。</h1>
+    </div>
+
+    <!-- 写真プレースホルダー：後で実写に差し替え -->
+    <!-- <img src="images/hero-miyoshi.jpg" alt="三好の風景"> -->
+
+    <div class="wrap">
+      <div class="hero__body fi">
+        <p>三好を訪れる外国人は年々急増しています。</p>
+        <p>しかし、多くの素晴らしい産品が「説明不足」という壁により、<br>その魅力を伝えきれていません。</p>
+        <p>三好市の魅力を「そのまま」正しく世界へ届けます。</p>
+        <p>翻訳機の翻訳だけでは、三好の魅力は伝わりません。</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 2. INSIGHT -->
+  <section class="section section--accent">
+    <div class="wrap">
+      <div class="insight__cols">
+
+        <!-- 左：写真（後で実写に差し替え） -->
+        <div class="insight__col fi">
+          <div class="insight__img photo-ph">
+            <!-- 後で実写に差し替え: <img src="images/taiwan-popup.jpg" alt="台湾POPUPの写真"> -->
+            <span>PHOTO</span>
+          </div>
+          <p class="insight__caption">台湾POPUP 2025年11月</p>
+        </div>
+
+        <!-- 右：長文テキスト -->
+        <div class="insight__col fi">
+          <p class="insight__lead">この柑橘はフルーツの粋を超え<br>もはや香水の様である。</p>
+          <p class="insight__sub">すだちとは何かー</p>
+
+          <div class="insight__text">
+            <p>日本語と英語の単純な翻訳では翻訳しきれない領域があります。翻訳機は日本語を「正しく」翻訳してくれますが、その商品が持つ特性を海外の文化に合わせて上手に「プロモーション」することはしてくれません。</p>
+
+            <p>国内の消費者に向けて商品を売る時、私たちは頭を悩ませ色々な戦略を考えます。商品の魅力が一言で伝わるような「キャッチコピー」を考えたり、商品が手に取りやすいパッケージを考えたり。しかしそれはあくまで「国内の消費者」に向けての戦略であり、この創意工夫の努力は翻訳機では翻訳しきれない現状があります。</p>
+
+            <p>左の写真は台湾でPOPUPを開催した時の写真です。（2025年11月）この時私たちは「すだち和紅茶」の商品を販売しましたが、海外の人たちは「すだち」を知りません。この商品を海外の人達に売ろうと考えた時、まず「すだち」の説明から始めないといけません。これが「国内向けの戦略」と「海外向けの戦略」の一例です。</p>
+
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 2b. INSIGHT CONTINUATION（中央配置） -->
+  <section class="section">
+    <div class="wrap">
+      <div class="insight-center fi">
+        <h3 class="insight-center__q">「すだちって結局何？」</h3>
+        <p class="insight-center__lead">もう一つ問題があります。「すだち」がなんであるのかを正しく説明できたとしても、その価値を正しく伝えないといけないという問題です。</p>
+      </div>
+
+      <div class="insight-center fi">
+        <p class="insight-center__body">現状今日本に来ている海外の方はもっとライトな感覚で日本に来ているのがほとんどです。その方たちに向けて「すだちとは柑橘の一種で、品のある清涼感のある香りが特徴で焼き魚などと相性がいい」と説明をされてもこれはそもそも日本の食文化に強い関心のある人達にしか刺さりません。</p>
+        <p class="insight-center__body">今必要な取り組みは日本への知識がないライトな観光層に対してアプローチする取り組みであり、それはすなわち日本の文化を知ってもらう「きっかけ」の創出が必要であるということです。</p>
+        <p class="insight-center__body">私たちはこれを「外国文化特有の言い回し」を採用したキャッチコピーをつけることで解決しようと考えました。</p>
+      </div>
+
+      <div class="insight-quote fi">
+        <p class="insight-quote__text">この柑橘はフルーツの粋を超え<br>もはや香水の様である。</p>
+      </div>
+
+      <div class="insight-center fi">
+        <p class="insight-center__body">私たちが聞けば少しオーバーな表現に感じるようなキャッチコピーですが、英語圏では実際によく使われるような比喩の言い回しです。英語には「a piece of cake」に代表されるように色々な比喩表現が存在します。これは直訳すれば「一切れのケーキ」ですが、英語圏では「とても簡単なこと」「楽勝」「朝飯前」という意味です。「ケーキ一切れくらいならペロッと簡単に食べられる」というニュアンスから派生した表現で、日常会話で非常によく使われてます。</p>
+        <p class="insight-center__body">こういった海外特有の言い回しや比喩文化に乗せて商品をプロモーションすることで、日本をそれほど知らない観光客の方にも「すだちという柑橘が日本にはあるのだな。香水くらい上品な香りがするらしい。ちょっと試してみよう」と行動喚起を起こしていきたいと考えています。</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 3. FEA -->
+  <section class="section section--bordered">
+    <div class="wrap">
+      <div class="fea__head fi">
+        <p class="eyebrow">Main Project 2026</p>
+        <h2 class="fea__title">MIYOSHI BOUND FEA 2026</h2>
+        <p class="fea__subtitle">三好の最前線で、実際に「売れる状態」を整える。</p>
+      </div>
+
+      <div class="fea__item fi">
+        <span class="fea__num">01</span>
+        <div>
+          <p class="fea__item-title">拠点の連携</p>
+          <p class="fea__item-body">大歩危・祖谷の3店舗（<strong>WESTWEST、夢舞台、まんなか</strong>）に特設ブースを設置。三好の玄関口で、訪れる外国人旅行者と産品を直接繋ぎます。</p>
+        </div>
+      </div>
+
+      <div class="fea__item fi">
+        <span class="fea__num">02</span>
+        <div>
+          <p class="fea__item-title">情報の配線</p>
+          <p class="fea__item-body">商品横の「<strong>英語POP</strong>」と「<strong>QRコード</strong>」から専用サイトへ誘導。正確な情報と購買意欲を、デジタルで繋ぎます。</p>
+        </div>
+      </div>
+
+      <div class="fea__item fi">
+        <span class="fea__num">03</span>
+        <div>
+          <p class="fea__item-title">価値の証明</p>
+          <p class="fea__item-body">どの商品がどう興味を持たれたかを可視化し、次の一手へ繋げます。データに基づいた改善で、継続的に「売れる状態」をアップデートします。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 4. COMMUNITY -->
+  <section class="section section--accent">
+    <div class="wrap--wide">
+      <div class="community__inner">
+
+        <div class="community__img photo-ph fi">
+          <!-- 後で実写に差し替え: <img src="images/ohno-portrait.jpg" alt="代表・大野のポートレート"> -->
+          <span>PHOTO — 代表（大野）ポートレート</span>
+        </div>
+
+        <div class="fi">
+          <p class="eyebrow">Community</p>
+          <h2 class="community__headline">まず、仲間になることから<br>始めませんか。</h2>
+          <p class="community__body">MIYOSHI BOUNDは、地域のプレイヤーが集まるコミュニティです。入会（無料）することで、以下のサポートを受ける資格を得られます。</p>
+          <ul class="benefits">
+            <li><strong>無料翻訳POP作成</strong><span>会員限定で、英語 POPの作成を支援します。</span></li>
+            <li><strong>個別相談窓口</strong><span>代表・大野と直接メールでリブランディングや海外展開の相談が可能です。</span></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 5. CTA -->
+  <section class="section section--bordered cta fi">
+    <div class="wrap">
+      <h2 class="cta__title">MIYOSHI BOUND<br>無料コミュニティに参加する</h2>
+      <br>
+      <a href="contact.html" class="cta__btn">参加する（無料）</a>
+      <br><br>
+      <p class="cta__note">登録後、会員専用ページから具体的なサービス依頼（翻訳POP作成等）が可能になります。</p>
+    </div>
+  </section>
+
+
+  <!-- Footer -->
+  <footer class="a-footer">
+    <ul class="a-footer__nav">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index-catalog.html">Catalog</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <p class="a-footer__copy">© 2024 MIYOSHI BOUND — Tokushima, Japan</p>
+  </footer>
+
+  <script src="js/tracking.js"></script>
+  <script>
+    MiyoshiTrack.send({ shop: 'about', type: 'view' });
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.fi').forEach(el => io.observe(el));
+  </script>
+
+</body>
+</html>

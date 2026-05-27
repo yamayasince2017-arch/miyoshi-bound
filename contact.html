@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Contact MIYOSHI BOUND — Apply to join the catalog or get in touch with the team." />
+  <title>Contact — MIYOSHI BOUND</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    /* ── Contact-specific ───────────────────────────────── */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: clamp(3rem, 6vw, 6rem);
+      align-items: start;
+      padding-block: var(--space-xl);
+    }
+
+    @media (max-width: 768px) {
+      .contact-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Sidebar info */
+    .contact-sidebar {
+      position: sticky;
+      top: 6rem;
+    }
+
+    .contact-sidebar__title {
+      font-size: 0.68rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-sidebar__body {
+      font-size: 0.88rem;
+      line-height: 1.95;
+      color: #666;
+      letter-spacing: 0.03em;
+      margin-bottom: 2rem;
+    }
+
+    .contact-detail {
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-detail dt {
+      font-size: 0.62rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .contact-detail dd {
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+      color: var(--color-text);
+    }
+
+    /* Form area */
+    .form-note {
+      font-size: 0.78rem;
+      line-height: 1.8;
+      color: #888;
+      letter-spacing: 0.04em;
+      margin-bottom: 2rem;
+      padding: 1.2rem 1.5rem;
+      border-left: 2px solid var(--color-border);
+      background: #f5f3ef;
+    }
+
+    /* What to expect section */
+    .expect-list {
+      margin-top: var(--space-lg);
+      padding-top: var(--space-lg);
+      border-top: 1px solid var(--color-border);
+    }
+
+    .expect-list__title {
+      font-size: 0.68rem;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .expect-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .expect-step__num {
+      font-size: 1.8rem;
+      font-weight: 300;
+      color: var(--color-border);
+      line-height: 1;
+      margin-bottom: 0.8rem;
+    }
+
+    .expect-step__title {
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-text);
+      margin-bottom: 0.5rem;
+    }
+
+    .expect-step__body {
+      font-size: 0.8rem;
+      line-height: 1.8;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navigation ──────────────────────────────────────── -->
+  <nav class="site-nav scrolled" aria-label="Site navigation">
+    <a href="index.html" class="site-nav__logo">MIYOSHI BOUND</a>
+    <ul class="site-nav__links" role="list">
+      <li><a href="index-catalog.html">Catalog</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" aria-current="page">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <!-- ── Page Header ───────────────────────────────────── -->
+    <header class="page-header">
+      <p class="page-header__eyebrow">Get in Touch</p>
+      <h1 class="page-header__title">Contact</h1>
+      <div class="divider"></div>
+      <p class="t-caption" style="max-width:480px; margin-inline:auto; color:#999;">
+        For producers wishing to join the catalog,<br>
+        or anyone who wants to know more about Miyoshi.
+      </p>
+    </header>
+
+
+    <div class="container">
+      <div class="contact-layout">
+
+        <!-- ── Sidebar ──────────────────────────────────── -->
+        <aside class="contact-sidebar fade-in">
+          <p class="contact-sidebar__title">About the Form</p>
+          <p class="contact-sidebar__body">
+            This form is for Miyoshi City producers and businesses
+            interested in joining the MIYOSHI BOUND catalog.
+            After submitting, you will receive an automatic welcome
+            email with next steps within a few minutes.
+          </p>
+
+          <dl>
+            <div class="contact-detail">
+              <dt>Response Time</dt>
+              <dd>Within 3 business days</dd>
+            </div>
+            <div class="contact-detail">
+              <dt>Language</dt>
+              <dd>Japanese / English</dd>
+            </div>
+            <div class="contact-detail">
+              <dt>Location</dt>
+              <dd>Miyoshi City, Tokushima</dd>
+            </div>
+            <div class="contact-detail">
+              <dt>Participation Fee</dt>
+              <dd>Free of charge</dd>
+            </div>
+          </dl>
+        </aside>
+
+
+        <!-- ── Form Area ─────────────────────────────────── -->
+        <div class="fade-in">
+          <div class="google-form-wrap">
+            <iframe
+              src="https://docs.google.com/forms/d/e/1FAIpQLSfRdTNMfnqiuXRMIU1u7YaPNsi4a0WUC0ViUXU6voP8I250qw/viewform?embedded=true"
+              width="100%"
+              height="967"
+              frameborder="0"
+              marginheight="0"
+              marginwidth="0"
+              title="MIYOSHI BOUND お問い合わせフォーム"
+              loading="lazy">
+              読み込んでいます…
+            </iframe>
+          </div>
+
+        </div><!-- /form area -->
+      </div><!-- /contact-layout -->
+
+
+      <!-- ── What to Expect ─────────────────────────────── -->
+      <div class="expect-list fade-in">
+        <p class="expect-list__title">What Happens Next</p>
+        <div class="expect-steps">
+          <div>
+            <p class="expect-step__num">01</p>
+            <p class="expect-step__title">Welcome Email</p>
+            <p class="expect-step__body">
+              You receive an automatic welcome email with an overview of the platform and next steps.
+            </p>
+          </div>
+          <div>
+            <p class="expect-step__num">02</p>
+            <p class="expect-step__title">Interview</p>
+            <p class="expect-step__body">
+              Our team visits you (or connects by video) to hear your story and photograph your work.
+            </p>
+          </div>
+          <div>
+            <p class="expect-step__num">03</p>
+            <p class="expect-step__title">Page Build</p>
+            <p class="expect-step__body">
+              We create your producer page, QR codes, and set up tracking — at no cost to you.
+            </p>
+          </div>
+          <div>
+            <p class="expect-step__num">04</p>
+            <p class="expect-step__title">Go Live</p>
+            <p class="expect-step__body">
+              Your story reaches inbound travelers. You receive monthly data on interest and reach.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /container -->
+  </main>
+
+
+  <!-- ── Footer ─────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <nav class="site-footer__nav" aria-label="Footer navigation">
+      <a href="index.html">Home</a>
+      <a href="index-catalog.html">Catalog</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <p class="site-footer__copy">© 2024 MIYOSHI BOUND — Tokushima, Japan</p>
+  </footer>
+
+
+  <!-- Scripts -->
+  <script src="js/tracking.js"></script>
+  <script>
+    MiyoshiTrack.send({ shop: 'contact', type: 'view' });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
